@@ -8,5 +8,5 @@ const signOutBtn = document.getElementById("signOutBtn")
 
 const userDetails = document.getElementById("userDetails")
 
-//to make user be able user google account in fire base
+//to make user be able user google account in firebase
 const provider = new firebase.auth.GoogleAuthProvider()
