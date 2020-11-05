@@ -10,3 +10,6 @@ const userDetails = document.getElementById("userDetails")
 
 //to make user be able user google account in firebase
 const provider = new firebase.auth.GoogleAuthProvider()
+
+signInBtn.onclick = () => auth.signInWithPopup(provider)
+signOutBtn.onclick = () => auth.signOut()
