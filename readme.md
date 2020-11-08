@@ -46,3 +46,6 @@ auth.onAuthStateChanged((user) => {
 ```
 
 ** Firestore
+- set firestore in console
+- coleection naming better in plural
+- CONTINUE on fireship repo

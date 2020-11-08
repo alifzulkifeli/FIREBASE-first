@@ -20,11 +20,45 @@ auth.onAuthStateChanged((user) => {
     //signed in
     whenSignenIn.hidden = false;
     whenSignedOut.hidden = true;
-    userDetails.innerHTML = `<h3>Hello ${user.displayName}, Id: ${user.uid}</h3>`;
+    userDetails.innerHTML = `<h3>Hello ${user.displayName} Id: ${user.uid}</h3>`;
   } else {
     //signed out
     whenSignenIn.hidden = true;
     whenSignedOut.hidden = false;
     userDetails.innerHTML = ``;
+  }
+})
+
+const db = firebase.firestore()
+
+const createThings = document.getElementById("createThing")
+const thingList = document.getElementById("thingsList")
+
+let thingsRef
+let unsubscribe
+
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    //signed in
+    thingsRef = db.collection('things')
+    createThings.onclick = () => {
+      thingsRef.add({
+        uid: user.uid,
+        name: faker.commerce.productName(),
+        createdAt: Date.now()
+      })
+    }
+
+    unsubscribe = thingsRef
+      .where('uid', '==', user.uid)
+      .onSnapshot(querySnapshot => {
+        const items = querySnapshot.docs.map(doc => {
+          return `<li>${doc.data().name}</li>`
+        })
+
+        thingList.innerHTML = items.join('')
+      })
+  } else {
+    unsubscribe && unsubscribe()
   }
 })
